@@ -77,6 +77,12 @@ public class Baby implements Serializable {
 	@OneToMany(mappedBy="baby")
 	private List<Bath> bath;
 	
+	@OneToMany(mappedBy="baby")
+	private List<BreastFeeding> breastFeeding;
+	
+	@OneToMany(mappedBy="baby")
+	private List<OtherFeeding> otherFeeding;
+	
 	public Long getId() {
 		return id;
 	}
@@ -177,6 +183,26 @@ public class Baby implements Serializable {
 	public void removeBath(Bath bath) {
 		this.bath.remove(bath);
 		bath.setBaby(null);
+	}
+	
+	public void addBreastFeeding(BreastFeeding breastFeeding) {
+		this.breastFeeding.add(breastFeeding);
+		breastFeeding.setBaby(this);
+	}
+	
+	public void removeBreastFeeding(BreastFeeding breastFeeding) {
+		this.breastFeeding.remove(breastFeeding);
+		breastFeeding.setBaby(null);
+	}
+	
+	public void addOtherFeeding(OtherFeeding otherFeeding) {
+		this.otherFeeding.add(otherFeeding);
+		otherFeeding.setBaby(this);
+	}
+	
+	public void removeOtherFeeding(OtherFeeding otherFeeding) {
+		this.otherFeeding.remove(otherFeeding);
+		otherFeeding.setBaby(null);
 	}
 	
 }

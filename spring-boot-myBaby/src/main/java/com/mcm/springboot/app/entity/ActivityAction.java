@@ -47,6 +47,12 @@ public class ActivityAction implements Serializable {
 	@OneToMany(mappedBy="action")
 	private List<DiaperChange> diaperChange;
 
+	@OneToMany(mappedBy="baby")
+	private List<BreastFeeding> breastFeeding;
+	
+	@OneToMany(mappedBy="baby")
+	private List<OtherFeeding> otherFeeding;
+	
 	public Long getId() {
 		return id;
 	}
@@ -99,5 +105,25 @@ public class ActivityAction implements Serializable {
 	public void removeDiaperChange(DiaperChange diaperChange) {
 		this.diaperChange.remove(diaperChange);
 		diaperChange.setAction(null);
+	}
+	
+	public void addBreastFeeding(BreastFeeding breastFeeding) {
+		this.breastFeeding.add(breastFeeding);
+		breastFeeding.setAction(this);
+	}
+	
+	public void removeBreastFeeding(BreastFeeding breastFeeding) {
+		this.breastFeeding.remove(breastFeeding);
+		breastFeeding.setAction(null);
+	}
+	
+	public void addOtherFeeding(OtherFeeding otherFeeding) {
+		this.otherFeeding.add(otherFeeding);
+		otherFeeding.setAction(this);
+	}
+	
+	public void removeOtherFeeding(OtherFeeding otherFeeding) {
+		this.otherFeeding.remove(otherFeeding);
+		otherFeeding.setAction(null);
 	}
 }
