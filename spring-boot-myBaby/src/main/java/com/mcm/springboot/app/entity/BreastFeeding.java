@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,43 +20,41 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.mcm.springboot.app.utils.BreastSide;
 
 @Entity
-@Table(name="breast_feeding")
+@Table(name = "breast_feeding")
 public class BreastFeeding implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_breast_feeding")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_breast_feeding")
 	private Long id;
-	
-	@Column(name="breast")
+
+	@Column(name = "breast")
 	@NotEmpty
 	private BreastSide breast;
-	
+
 	@NotEmpty
-	@Column(name="start_date_breast_feeding")
+	@Column(name = "start_date_breast_feeding")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
-	
-	@Column(name="end_date_breast_feeding")
+
+	@Column(name = "end_date_breast_feeding")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
-	
-	@Column(name="comments_breast_feeding")
+
+	@Column(name = "comments_breast_feeding")
 	private String comment;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_activiy_action_breast_feeding")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ActivityAction action;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_baby_breast_feeding")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Baby baby;
 
 	public Long getId() {
@@ -115,6 +112,5 @@ public class BreastFeeding implements Serializable {
 	public void setBaby(Baby baby) {
 		this.baby = baby;
 	}
-	
-	
+
 }

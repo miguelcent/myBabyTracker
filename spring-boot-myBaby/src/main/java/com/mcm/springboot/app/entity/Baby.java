@@ -1,13 +1,16 @@
 package com.mcm.springboot.app.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,67 +25,79 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.mcm.springboot.app.utils.BirthEyesColor;
 import com.mcm.springboot.app.utils.BirthHairColor;
 
-
 @Entity
-@Table(name="baby")
+@Table(name = "baby")
 public class Baby implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_baby")
+	@Column(name = "id_baby")
 	private Long id;
-	
+
 	@NotEmpty
-	@Column(name="name_baby")
+	@Column(name = "name_baby")
 	private String name;
-	
-	@Column(name="surname_baby")
+
+	@Column(name = "surname_baby")
 	private String surname;
-	
+
 	@NotEmpty
-	@Column(name="birth_date_baby")
-	//Tag "@Temporal" is useful to dates. It makes easier the conversions between different Date types in Databases engines and Date part of java.util
+	@Column(name = "birth_date_baby")
+	// Tag "@Temporal" is useful to dates. It makes easier the conversions between
+	// different Date types in Databases engines and Date part of java.util
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birthDate;
-	
-	@Column(name="birth_weight_baby")
+
+	@Column(name = "birth_weight_baby")
 	private int weight;
-	
-	@Column(name="birth_height_baby")
+
+	@Column(name = "birth_height_baby")
 	private int height;
-	
-	@Column(name="comments_baby")
+
+	@Column(name = "comments_baby")
 	private String comments;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="birth_hair_color_baby")
+	@Column(name = "birth_hair_color_baby")
 	private BirthHairColor hair_color;
-	
-	@Column(name="birth_eyes_color_baby")
+
+	@Column(name = "birth_eyes_color_baby")
 	@Enumerated(EnumType.STRING)
 	private BirthEyesColor eyes_color;
-	
-	@OneToMany(mappedBy="baby")
+
+// Relations in entities	
+
+	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<SleepSession> sleepSessions;
-	
-	@OneToMany(mappedBy="baby")
+
+	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<DiaperChange> diaperChange;
-	
-	@OneToMany(mappedBy="baby")
+
+	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Bath> bath;
-	
-	@OneToMany(mappedBy="baby")
+
+	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<BreastFeeding> breastFeeding;
-	
-	@OneToMany(mappedBy="baby")
+
+	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<OtherFeeding> otherFeeding;
-	
+
+	public Baby() {
+		sleepSessions = new ArrayList<SleepSession>();
+		bath = new ArrayList<Bath>();
+		diaperChange = new ArrayList<DiaperChange>();
+		breastFeeding = new ArrayList<BreastFeeding>();
+		otherFeeding = new ArrayList<OtherFeeding>();
+	}
+
+//getters and setters
+
 	public Long getId() {
 		return id;
 	}
@@ -154,55 +169,97 @@ public class Baby implements Serializable {
 	public void setEyes_color(BirthEyesColor eyes_color) {
 		this.eyes_color = eyes_color;
 	}
-	
+
+	public List<SleepSession> getSleepSessions() {
+		return sleepSessions;
+	}
+
+	public void setSleepSessions(List<SleepSession> sleepSessions) {
+		this.sleepSessions = sleepSessions;
+	}
+
+	public List<DiaperChange> getDiaperChange() {
+		return diaperChange;
+	}
+
+	public void setDiaperChange(List<DiaperChange> diaperChange) {
+		this.diaperChange = diaperChange;
+	}
+
+	public List<Bath> getBath() {
+		return bath;
+	}
+
+	public void setBath(List<Bath> bath) {
+		this.bath = bath;
+	}
+
+	public List<BreastFeeding> getBreastFeeding() {
+		return breastFeeding;
+	}
+
+	public void setBreastFeeding(List<BreastFeeding> breastFeeding) {
+		this.breastFeeding = breastFeeding;
+	}
+
+	public List<OtherFeeding> getOtherFeeding() {
+		return otherFeeding;
+	}
+
+	public void setOtherFeeding(List<OtherFeeding> otherFeeding) {
+		this.otherFeeding = otherFeeding;
+	}
+
+//add / remove methods
+
 	public void addSleepSession(SleepSession session) {
 		sleepSessions.add(session);
 		session.setBaby(this);
 	}
-	
+
 	public void removeSleepSession(SleepSession session) {
 		sleepSessions.remove(session);
 		session.setBaby(null);
 	}
-	
+
 	public void addDiaperChange(DiaperChange diaperChange) {
 		this.diaperChange.add(diaperChange);
 		diaperChange.setBaby(this);
 	}
-	
+
 	public void removeDiaperChange(DiaperChange diaperChange) {
 		this.diaperChange.remove(diaperChange);
 		diaperChange.setBaby(null);
 	}
-	
+
 	public void addBath(Bath bath) {
 		this.bath.add(bath);
 		bath.setBaby(this);
 	}
-	
+
 	public void removeBath(Bath bath) {
 		this.bath.remove(bath);
 		bath.setBaby(null);
 	}
-	
+
 	public void addBreastFeeding(BreastFeeding breastFeeding) {
 		this.breastFeeding.add(breastFeeding);
 		breastFeeding.setBaby(this);
 	}
-	
+
 	public void removeBreastFeeding(BreastFeeding breastFeeding) {
 		this.breastFeeding.remove(breastFeeding);
 		breastFeeding.setBaby(null);
 	}
-	
+
 	public void addOtherFeeding(OtherFeeding otherFeeding) {
 		this.otherFeeding.add(otherFeeding);
 		otherFeeding.setBaby(this);
 	}
-	
+
 	public void removeOtherFeeding(OtherFeeding otherFeeding) {
 		this.otherFeeding.remove(otherFeeding);
 		otherFeeding.setBaby(null);
 	}
-	
+
 }

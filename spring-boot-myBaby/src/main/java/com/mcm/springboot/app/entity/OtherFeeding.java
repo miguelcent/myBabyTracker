@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,40 +18,37 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="other_feeding")
+@Table(name = "other_feeding")
 public class OtherFeeding implements Serializable {
 
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_other_feeding")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_other_feeding")
 	private Long id;
-	
+
 	@NotEmpty
-	@Column(name="start_date_other_feeding")
+	@Column(name = "start_date_other_feeding")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
-	
-	@Column(name="end_date_other_feeding")
+
+	@Column(name = "end_date_other_feeding")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
-	
-	@Column(name="comments_other_feeding")
+
+	@Column(name = "comments_other_feeding")
 	private String comment;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_activiy_action_other_feeding")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ActivityAction action;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_baby_other_feeding")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Baby baby;
 
 	public Long getId() {
@@ -102,6 +98,5 @@ public class OtherFeeding implements Serializable {
 	public void setBaby(Baby baby) {
 		this.baby = baby;
 	}
-	
-	
+
 }

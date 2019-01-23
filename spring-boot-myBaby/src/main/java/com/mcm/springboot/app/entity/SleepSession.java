@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,42 +20,40 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.mcm.springboot.app.utils.TypePlaceSleeping;
 
 @Entity
-@Table(name="sleep_session")
+@Table(name = "sleep_session")
 public class SleepSession implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_sleep_session")
+	@Column(name = "id_sleep_session")
 	private Long id;
-	
+
 	@NotEmpty
-	@Column(name="start_date_sleep_session")
+	@Column(name = "start_date_sleep_session")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
-	
-	@Column(name="end_date_sleep_session")
+
+	@Column(name = "end_date_sleep_session")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
-	
-	@Column(name="place_sleep_session")
+
+	@Column(name = "place_sleep_session")
 	private TypePlaceSleeping place;
-	
-	@Column(name="comment_sleep_session")
+
+	@Column(name = "comment_sleep_session")
 	private String comment;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_baby_sleep_session")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Baby baby;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_activity_action_sleep_session")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ActivityAction action;
 
 	public Long getId() {
@@ -114,6 +111,5 @@ public class SleepSession implements Serializable {
 	public void setAction(ActivityAction action) {
 		this.action = action;
 	}
-	
-	
+
 }

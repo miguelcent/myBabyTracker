@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,38 +20,33 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.mcm.springboot.app.utils.DiaperStatus;
 
 @Entity
-@Table(name="diaper_change")
+@Table(name = "diaper_change")
 public class DiaperChange implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_diaper_change")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_diaper_change")
 	private Long id;
-	
-	@Column(name="diaper_status")
+
+	@Column(name = "diaper_status")
 	@NotEmpty
 	private DiaperStatus status;
-	
-	@Column(name="comments_diaper")
+
+	@Column(name = "comments_diaper")
 	private String comment;
-	
+
 	@NotEmpty
-	@Column(name="date_diaper_change")
+	@Column(name = "date_diaper_change")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateDiaperChange;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_activiy_action_diaper_change")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ActivityAction action;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_baby_diaper_change")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Baby baby;
 
 	public Long getId() {
@@ -102,7 +96,5 @@ public class DiaperChange implements Serializable {
 	public void setBaby(Baby baby) {
 		this.baby = baby;
 	}
-	
-	
-	
+
 }

@@ -9,7 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,34 +18,32 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="bath")
+@Table(name = "bath")
 public class Bath implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_bath")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_bath")
 	private Long id;
-	
+
 	@NotEmpty
-	@Column(name="date_bath")
+	@Column(name = "date_bath")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateBath;
-	
-	@Column(name="comments_bath")
+
+	@Column(name = "comments_bath")
 	private String comments;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_baby_bath")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Baby baby;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_activity_action_bath")
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private ActivityAction action;
 
 	public Long getId() {
@@ -88,7 +85,5 @@ public class Bath implements Serializable {
 	public void setAction(ActivityAction action) {
 		this.action = action;
 	}
-	
-	
 
 }
