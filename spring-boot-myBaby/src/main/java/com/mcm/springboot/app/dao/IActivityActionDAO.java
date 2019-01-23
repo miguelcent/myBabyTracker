@@ -1,5 +1,9 @@
 package com.mcm.springboot.app.dao;
 
-public interface IActivityActionDAO {
+import org.springframework.data.repository.CrudRepository;
+
+import com.mcm.springboot.app.entity.ActivityAction;
+
+public interface IActivityActionDAO  extends CrudRepository<ActivityAction, Long>{
 
 }
