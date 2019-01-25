@@ -62,7 +62,7 @@ public class ActivityAction implements Serializable {
 	@Column(name="activity_sleepSession")
 	private TypePlaceSleeping sleepSessions;
 	
-	@Column(name="activity_bath")
+	@Column(name="activity_bath", nullable=false)
 	private Boolean bath;
 
 	@Enumerated(EnumType.STRING)
@@ -75,6 +75,13 @@ public class ActivityAction implements Serializable {
 
 	@Column(name="activity_other_feeding")
 	private Boolean otherFeeding;
+	
+	public ActivityAction() {
+		this.breastSide = null;
+		this.diaperStatus = null;
+		this.sleepSessions = null;
+		this.bath = false;
+	}
 
 	public Long getId() {
 		return id;
