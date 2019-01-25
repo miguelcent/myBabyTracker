@@ -16,7 +16,4 @@ public List<ActivityAction> findAll();
 	
 	public void delete(Long id);
 	
-	public List<ActivityAction> findAllByActivityCategoryId(Long categoryId);
-	
-	public void deleteAllByActivityCategoryID(Long categoryID);
 }

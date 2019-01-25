@@ -1,20 +1,26 @@
 package com.mcm.springboot.app.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.mcm.springboot.app.utils.BreastSide;
+import com.mcm.springboot.app.utils.DiaperStatus;
+import com.mcm.springboot.app.utils.TypePlaceSleeping;
 
 @Entity
 @Table(name = "activity_action")
@@ -31,35 +37,44 @@ public class ActivityAction implements Serializable {
 	@Column(name = "id_activity_action")
 	private Long id;
 
-	@Column(name = "action_name")
 	@NotEmpty
-	private String actionName;
-
+	@Column(name = "activity_start_date")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;
+	
+	@NotEmpty
+	@Column(name = "activity_endt_date")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date endDate;
+	
+	@Column(name = "activity_comment")
+	private String comment;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private ActivityCategory activityCategory;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Baby baby;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="activity_sleepSession")
+	private TypePlaceSleeping sleepSessions;
+	
+	@Column(name="activity_bath")
+	private Boolean bath;
 
-	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<SleepSession> sleepSessions;
+	@Enumerated(EnumType.STRING)
+	@Column(name="activity_diaper_status")
+	private DiaperStatus diaperStatus;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="activity_breast_side")
+	private BreastSide breastSide;
 
-	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Bath> bath;
-
-	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<DiaperChange> diaperChange;
-
-	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<BreastFeeding> breastFeeding;
-
-	@OneToMany(mappedBy = "action", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<OtherFeeding> otherFeeding;
-
-	public ActivityAction() {
-		sleepSessions = new ArrayList<SleepSession>();
-		bath = new ArrayList<Bath>();
-		diaperChange = new ArrayList<DiaperChange>();
-		breastFeeding = new ArrayList<BreastFeeding>();
-		otherFeeding = new ArrayList<OtherFeeding>();
-	}
+	@Column(name="activity_other_feeding")
+	private Boolean otherFeeding;
 
 	public Long getId() {
 		return id;
@@ -69,12 +84,28 @@ public class ActivityAction implements Serializable {
 		this.id = id;
 	}
 
-	public String getActionName() {
-		return actionName;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setActionName(String actionName) {
-		this.actionName = actionName;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
 	public ActivityCategory getActivityCategory() {
@@ -85,53 +116,53 @@ public class ActivityAction implements Serializable {
 		this.activityCategory = activityCategory;
 	}
 
-	public void addSleepSession(SleepSession session) {
-		sleepSessions.add(session);
-		session.setAction(this);
+	public Baby getBaby() {
+		return baby;
 	}
 
-	public void removeSleepSession(SleepSession session) {
-		sleepSessions.remove(session);
-		session.setAction(null);
+	public void setBaby(Baby baby) {
+		this.baby = baby;
 	}
 
-	public void addBath(Bath bath) {
-		this.bath.add(bath);
-		bath.setAction(this);
+	public TypePlaceSleeping getSleepSessions() {
+		return sleepSessions;
 	}
 
-	public void removeBath(Bath bath) {
-		this.bath.remove(bath);
-		bath.setAction(null);
+	public void setSleepSessions(TypePlaceSleeping sleepSessions) {
+		this.sleepSessions = sleepSessions;
 	}
 
-	public void addDiaperChange(DiaperChange diaperChange) {
-		this.diaperChange.add(diaperChange);
-		diaperChange.setAction(this);
+	public Boolean getBath() {
+		return bath;
 	}
 
-	public void removeDiaperChange(DiaperChange diaperChange) {
-		this.diaperChange.remove(diaperChange);
-		diaperChange.setAction(null);
+	public void setBath(Boolean bath) {
+		this.bath = bath;
 	}
 
-	public void addBreastFeeding(BreastFeeding breastFeeding) {
-		this.breastFeeding.add(breastFeeding);
-		breastFeeding.setAction(this);
+	public DiaperStatus getDiaperStatus() {
+		return diaperStatus;
 	}
 
-	public void removeBreastFeeding(BreastFeeding breastFeeding) {
-		this.breastFeeding.remove(breastFeeding);
-		breastFeeding.setAction(null);
+	public void setDiaperStatus(DiaperStatus diaperStatus) {
+		this.diaperStatus = diaperStatus;
 	}
 
-	public void addOtherFeeding(OtherFeeding otherFeeding) {
-		this.otherFeeding.add(otherFeeding);
-		otherFeeding.setAction(this);
+	public BreastSide getBreastSide() {
+		return breastSide;
 	}
 
-	public void removeOtherFeeding(OtherFeeding otherFeeding) {
-		this.otherFeeding.remove(otherFeeding);
-		otherFeeding.setAction(null);
+	public void setBreastSide(BreastSide breastSide) {
+		this.breastSide = breastSide;
 	}
+
+	public Boolean getOtherFeeding() {
+		return otherFeeding;
+	}
+
+	public void setOtherFeeding(Boolean otherFeeding) {
+		this.otherFeeding = otherFeeding;
+	}
+
+	
 }

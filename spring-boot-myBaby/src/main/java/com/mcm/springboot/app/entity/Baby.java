@@ -74,26 +74,13 @@ public class Baby implements Serializable {
 // Relations in entities	
 
 	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<SleepSession> sleepSessions;
+	private List<ActivityAction> activityActions;
 
-	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<DiaperChange> diaperChange;
 
-	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Bath> bath;
-
-	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<BreastFeeding> breastFeeding;
-
-	@OneToMany(mappedBy = "baby", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<OtherFeeding> otherFeeding;
 
 	public Baby() {
-		sleepSessions = new ArrayList<SleepSession>();
-		bath = new ArrayList<Bath>();
-		diaperChange = new ArrayList<DiaperChange>();
-		breastFeeding = new ArrayList<BreastFeeding>();
-		otherFeeding = new ArrayList<OtherFeeding>();
+		activityActions = new ArrayList<ActivityAction>();
+	
 	}
 
 //getters and setters
@@ -170,96 +157,28 @@ public class Baby implements Serializable {
 		this.eyes_color = eyes_color;
 	}
 
-	public List<SleepSession> getSleepSessions() {
-		return sleepSessions;
+	public List<ActivityAction> getActivityActions() {
+		return activityActions;
 	}
 
-	public void setSleepSessions(List<SleepSession> sleepSessions) {
-		this.sleepSessions = sleepSessions;
+	public void setActivityAction(List<ActivityAction> activityActions) {
+		this.activityActions = activityActions;
 	}
 
-	public List<DiaperChange> getDiaperChange() {
-		return diaperChange;
-	}
-
-	public void setDiaperChange(List<DiaperChange> diaperChange) {
-		this.diaperChange = diaperChange;
-	}
-
-	public List<Bath> getBath() {
-		return bath;
-	}
-
-	public void setBath(List<Bath> bath) {
-		this.bath = bath;
-	}
-
-	public List<BreastFeeding> getBreastFeeding() {
-		return breastFeeding;
-	}
-
-	public void setBreastFeeding(List<BreastFeeding> breastFeeding) {
-		this.breastFeeding = breastFeeding;
-	}
-
-	public List<OtherFeeding> getOtherFeeding() {
-		return otherFeeding;
-	}
-
-	public void setOtherFeeding(List<OtherFeeding> otherFeeding) {
-		this.otherFeeding = otherFeeding;
-	}
+	
 
 //add / remove methods
 
-	public void addSleepSession(SleepSession session) {
-		sleepSessions.add(session);
-		session.setBaby(this);
+	public void addActivityAction(ActivityAction activityAction) {
+		activityActions.add(activityAction);
+		activityAction.setBaby(this);
 	}
 
-	public void removeSleepSession(SleepSession session) {
-		sleepSessions.remove(session);
-		session.setBaby(null);
+	public void removeActivityAction(ActivityAction activityAction) {
+		activityActions.remove(activityAction);
+		activityAction.setBaby(null);
 	}
 
-	public void addDiaperChange(DiaperChange diaperChange) {
-		this.diaperChange.add(diaperChange);
-		diaperChange.setBaby(this);
-	}
-
-	public void removeDiaperChange(DiaperChange diaperChange) {
-		this.diaperChange.remove(diaperChange);
-		diaperChange.setBaby(null);
-	}
-
-	public void addBath(Bath bath) {
-		this.bath.add(bath);
-		bath.setBaby(this);
-	}
-
-	public void removeBath(Bath bath) {
-		this.bath.remove(bath);
-		bath.setBaby(null);
-	}
-
-	public void addBreastFeeding(BreastFeeding breastFeeding) {
-		this.breastFeeding.add(breastFeeding);
-		breastFeeding.setBaby(this);
-	}
-
-	public void removeBreastFeeding(BreastFeeding breastFeeding) {
-		this.breastFeeding.remove(breastFeeding);
-		breastFeeding.setBaby(null);
-	}
-
-	public void addOtherFeeding(OtherFeeding otherFeeding) {
-		this.otherFeeding.add(otherFeeding);
-		otherFeeding.setBaby(this);
-	}
-
-	public void removeOtherFeeding(OtherFeeding otherFeeding) {
-		this.otherFeeding.remove(otherFeeding);
-		otherFeeding.setBaby(null);
-	}
+	
 
 }
